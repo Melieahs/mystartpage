@@ -1,0 +1,1 @@
+{"action":{"default_title":"My Startpage"},"icons":{"48":"icons/icon48.png","128":"icons/icon128.png","16":"icons/icon16.png"},"manifest_version":3,"chrome_url_overrides":{"newtab":"index.html"},"short_name":"Startpage","version":"1.1","permissions":["storage"],"description":"自定义主页 + 扁平化书签，替换新标签页","name":"My Startpage"}
