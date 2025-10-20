@@ -1,14 +1,14 @@
-// index.js - 修正版（包含 bingSubmit 点击处理）
+// index.js
 (function(){
   function createShortcutElement(item){
     const a = document.createElement('a');
     a.className = 'shortcut-card';
     a.href = item.url;
     a.target = '_blank';
-
+    // icon element: if item.icon present use <img>, else show first letter or generic glyph
     const iconWrap = document.createElement('div');
     iconWrap.className = 'icon';
-    if(item.icon){
+    if(item.icon) {
       const img = document.createElement('img');
       img.src = item.icon;
       img.alt = item.name || '';
@@ -18,13 +18,12 @@
       img.onerror = function(){ this.style.display = 'none'; iconWrap.textContent = item.name ? item.name[0] : '🔗'; };
       iconWrap.appendChild(img);
     } else {
+      // fallback glyph or initial
       iconWrap.textContent = item.name ? item.name[0].toUpperCase() : '🔗';
     }
-
     const label = document.createElement('div');
     label.className = 'label';
     label.textContent = item.name || item.url;
-
     a.appendChild(iconWrap);
     a.appendChild(label);
     return a;
@@ -42,9 +41,8 @@
   function init(){
     if (typeof loadTheme === 'function') loadTheme();
     const themeBtn = document.getElementById('themeBtn');
-    if (themeBtn) themeBtn.addEventListener('click', ()=> toggleTheme());
+    if (themeBtn) themeBtn.addEventListener('click', function(){ if (typeof toggleTheme === 'function') toggleTheme(); });
 
-    // 文件输入由加号按钮触发；文件输入本身保持隐藏
     const shortcutsFile = document.getElementById('shortcutsFile');
     const openBtn = document.getElementById('openShortcutsFile');
     if (openBtn && shortcutsFile) openBtn.addEventListener('click', ()=>shortcutsFile.click());
@@ -68,52 +66,11 @@
       });
     }
 
-    // 加载并渲染已保存的快捷方式
+    // load and render saved shortcuts
     const saved = window.tryParseJSON ? tryParseJSON(localStorage.getItem('shortcuts'), []) : [];
     renderShortcuts(saved);
 
-    // 搜索表单：回车触发 Bing（默认提交）
-    const form = document.getElementById('searchForm');
-    const input = document.getElementById('searchInput');
-    if (form && input) {
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        const q = input.value.trim();
-        if (q) {
-          // 回车或提交（Bing）
-          window.location.href = 'https://www.bing.com/search?q=' + encodeURIComponent(q);
-        }
-      });
-    }
-
-    // Bing 按钮点击处理（修复点）
-    const bingBtn = document.getElementById('bingSubmit');
-    if (bingBtn && input) {
-      bingBtn.addEventListener('click', function(){
-        const q = input.value.trim();
-        if (q) {
-          window.location.href = 'https://www.bing.com/search?q=' + encodeURIComponent(q);
-        } else {
-          // 若为空，也跳转到 Bing 首页
-          window.location.href = 'https://www.bing.com/';
-        }
-      });
-    }
-
-    // Copilot 按钮：询问 Copilot（点击）
-    const copilotBtn = document.getElementById('copilotBtn');
-    if (copilotBtn && input) {
-      copilotBtn.addEventListener('click', function(){
-        const q = input.value.trim();
-        if (q) {
-          window.location.href = 'https://copilot.microsoft.com/?q=' + encodeURIComponent(q);
-        } else {
-          window.location.href = 'https://copilot.microsoft.com/';
-        }
-      });
-    }
-
-    // luckyBtn fallback (if you still have a "手气不错" button)
+    // lucky button
     const luckyBtn = document.getElementById('luckyBtn');
     if (luckyBtn){
       luckyBtn.addEventListener('click', ()=>{
@@ -121,7 +78,7 @@
       });
     }
 
-    // logo fallback
+    // logo error silent fallback
     const img = document.getElementById('logoImg');
     if (img) img.addEventListener('error', ()=>{ /* silent fallback */ });
   }

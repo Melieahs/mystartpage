@@ -264,28 +264,3 @@ input[type="submit"]{
   .page{ padding-top:28px; padding-bottom:28px; }
   .shortcuts{ gap:10px; }
 }
-
-/* 去掉书签链接下划线并保持与按钮一致的外观（最小改动） */
-a.bookmark-button,
-a#openBookmarks,
-a.bookmark-button:visited,
-a#openBookmarks:visited {
-  text-decoration: none !important;
-  color: inherit;
-  background: var(--button-bg);
-  color: var(--button-text);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border-radius: 6px;
-  box-shadow: var(--shadow-1);
-}
-
-/* 悬停态保持与普通按钮一致 */
-a.bookmark-button:hover,
-a#openBookmarks:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-2);
-}
-
