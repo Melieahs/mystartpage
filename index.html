@@ -2,51 +2,42 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>自定义主页</title>
+  <title>新标签页</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    body { min-height:100vh; display:flex; flex-direction:column; align-items:center; }
-    .main { margin-top:120px; display:flex; flex-direction:column; align-items:center; width:100%; }
-    .logo img { width:272px; height:auto; margin-bottom:30px; display:block; }
-    form { display:flex; flex-direction:column; align-items:center; gap:8px; }
-    input[type="text"] { width:600px; padding:14px 20px; font-size:1.1rem; border-radius:24px; border:1px solid var(--input-border); background:var(--input-bg); color:var(--text-color); }
-    .buttons { display:flex; gap:10px; margin-top:4px; }
-    .shortcut-card { background:var(--card-bg); padding:12px 20px; border-radius:12px; text-decoration:none; color:var(--text-color); margin:6px; display:inline-block; }
-    .import-button { background:var(--button-bg); color:var(--button-text); border-radius:50%; width:40px; height:40px; font-size:1.4rem; border:none; margin-top:20px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
-    .bookmark-button { display:inline-block; background:var(--button-bg); color:var(--button-text); text-decoration:none; padding:8px 16px; border-radius:6px; margin-top:30px; }
-    .toggle-mode { position:fixed; top:20px; right:20px; z-index:10; }
-    .shortcuts { margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:900px; }
-    #shortcutsFile { display:none; }
-  </style>
 </head>
 <body>
-  <button id="themeBtn" class="btn toggle-mode">切换深浅色</button>
+  <button id="themeBtn" class="btn toggle-mode">☀️/🌙</button>
 
-  <div class="main">
-    <div class="logo">
-      <img id="logoImg" src="icons/icon128.png" alt="Logo">
-    </div>
-
-    <form id="searchForm" action="https://www.bing.com/search" method="GET" >
-      <input type="text" id="searchInput" name="q" placeholder="搜索一下…" autofocus>
-      <div class="buttons">
-        <input type="submit" value="搜索" class="btn">
-        <button type="button" id="luckyBtn" class="btn">手气不错</button>
+  <div class="container">
+    <div class="page">
+      <div class="logo">
+        <img id="logoImg" src="icons/icon128.png" alt="Logo">
       </div>
-    </form>
 
-    <div class="shortcuts" id="shortcutContainer"></div>
+      <form id="searchForm" class="search-wrap" role="search" aria-label="主页搜索">
+        <input type="text" id="searchInput" name="q" placeholder="搜索一下…" autocomplete="off" />
+      </form>
 
-    <input id="shortcutsFile" type="file" accept=".json" />
-    <button class="import-button" id="openShortcutsFile" title="添加快捷方式">＋</button>
+      <!-- 搜索按钮组：置于搜索框正下方 -->
+      <div class="search-actions" aria-hidden="false" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+          <input type="button" id="bingSubmit" value="Bing 搜索" class="btn" />
+          <button type="button" id="copilotBtn" class="btn">询问 Copilot</button>
+        </div>
+      </div>
 
-    <a class="bookmark-button" id="openBookmarks" href="bookmarks.html">📑 打开书签</a>
+      <div class="shortcuts" id="shortcutContainer" aria-live="polite"></div>
+
+      <input id="shortcutsFile" type="file" accept=".json" style="display:none" />
+      <button class="import-button" id="openShortcutsFile" title="添加快捷方式">＋</button>
+
+      <a class="bookmark-button no-underline" id="openBookmarks" href="bookmarks.html">📑 打开书签</a>
+    </div>
   </div>
 
   <script src="main.js"></script>
   <script src="index.js"></script>
 </body>
 </html>
-
